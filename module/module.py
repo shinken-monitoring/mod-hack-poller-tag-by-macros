@@ -66,6 +66,11 @@ class Hack_pt_by_macros(BaseModule):
                 # after the automatic command inheritance
                 h.poller_tag = v
                 h.check_command.poller_tag = v
+                # We tag also host services which don't have poller_tag
+                for s in h.services:
+                    if s.poller_tag == 'None':
+                        s.poller_tag = v
+                        s.check_command.poller_tag = v
         for s in arb.conf.services:
             if s.poller_tag == 'None' and self.service_macro_name.upper() in s.customs:
                 v = s.customs[self.service_macro_name.upper()]
